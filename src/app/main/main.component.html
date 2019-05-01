@@ -1,0 +1,35 @@
+<div class="error-display show-error" [ngClass]="{'show-error': showError}">{{error}}</div>
+<section id="issues-page">
+    <div class="issue-container-holder" cdkDropListGroup>
+        <div class="issue-container" *ngFor="let status of statuses">
+          <span class="issue-transition-title">{{status.name}} ({{status.issues.length}})</span>
+          <div id="{{status.id}}" attr.data-name="{{status.name}}"
+            cdkDropList
+            [cdkDropListData]="status.issues"
+            class="issue-list"
+            (cdkDropListDropped)="drop($event)">
+
+            <div class="issue-box" id="{{item.id}}" 
+                attr.data-description="{{item.description}}" 
+                attr.data-summary="{{item.summary}}"
+                attr.data-name="{{item.name}}"
+                *ngFor="let item of status.issues" cdkDrag>
+              <span class="issue-box-id">{{item.name}}</span>
+              <span class="issue-box-description">{{item.description}}</span>
+              <span class="issue-box-project">
+                <img src="{{item.icon}}" /> {{item.project}}
+              </span>
+              <hr />
+              <span class="issue-box-summary">{{item.summary}}</span>
+              <span class="issue-box-timer" *ngIf="item.id == inProgressId">
+                <div class="issue-box-timer-container">
+                    <mat-icon class="issue-box-timer-clock">access_time</mat-icon>
+                    <span class="issue-box-timer-time">{{inProgressTime}}</span>
+                </div>
+                <button mat-button class="issue-box-timer-button">Stop</button>
+              </span>
+            </div>
+          </div>
+        </div>
+     </div>
+</section>
